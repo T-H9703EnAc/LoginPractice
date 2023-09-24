@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.study.loginpractice.entity.UserEntity;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
@@ -25,10 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService{
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
-        return User.builder()
+        return User
+                .builder()
                 .username(user.getUsername())
                 .password(user.getPasswordHash())
                 .build();
     }
-    
+
 }

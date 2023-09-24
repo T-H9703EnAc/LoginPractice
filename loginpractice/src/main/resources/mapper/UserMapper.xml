@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.loginpractice.mapper.UserMapper">
+    
     <select id="findByUsername" resultType="UserEntity">
         SELECT * FROM users WHERE username = #{username}
     </select>
+    
+    <insert id="insertUser">
+        INSERT INTO users (username, password_hash, email, created_at, updated_at)
+        VALUES (#{username}, #{passwordHash}, #{email}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    </insert>
+    
 </mapper>

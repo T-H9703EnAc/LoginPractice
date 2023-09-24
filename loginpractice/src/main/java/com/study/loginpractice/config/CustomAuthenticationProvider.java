@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 // @Componentをつけることで、このクラスがSpringのコンテナにBeanとして登録される
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider{
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -41,5 +41,5 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
         // authentication(認証方式)がUsernamePasswordAuthenticationToken.class(ユーザー名とパスワード認証)か判定
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
-    
+
 }

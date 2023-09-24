@@ -6,4 +6,6 @@ import com.study.loginpractice.entity.UserEntity;
 @Mapper
 public interface  UserMapper {
     UserEntity findByUsername(String username);
+
+    void insertUser(UserEntity userEntity);
 }
