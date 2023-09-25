@@ -21,18 +21,19 @@ public class UserRegistrationService {
     public void registerUser(SignupRequestDto userDto) throws Exception {
         // 二重登録のチェック
         if (userService.getUserByUsername(userDto.getUsername()) != null) {
-            throw new Exception("ユーザ名が既に存在します。"); // カスタム例外を使用することを検討: UserAlreadyExistsException
+            throw new Exception("ユーザ名が既に存在します。");
         }
 
         // パスワード一致のチェック
         if (!userDto.getPassword().equals(userDto.getPasswordConfirm())) {
-            throw new Exception("パスワードと確認用パスワードが一致しません。"); // カスタム例外を使用することを検討: PasswordMismatchException
+            throw new Exception("パスワードと確認用パスワードが一致しません。");
         }
 
         // 新しいユーザーエンティティの作成と保存
         UserEntity user = new UserEntity();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
+        // パスワードをハッシュ化してセットする
         user.setPasswordHash(passwordEncoder.encode(userDto.getPassword()));
         userService.createUser(user);
     }

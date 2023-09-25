@@ -1,6 +1,8 @@
 package com.study.loginpractice.controller;
 
 import java.net.URI;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.study.loginpractice.dto.SignupRequestDto;
 import com.study.loginpractice.service.UserRegistrationService;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class UserController {
@@ -23,13 +27,16 @@ public class UserController {
 
     // ユーザー登録のエンドポイント
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@ModelAttribute SignupRequestDto signupRequestDto,
+    public ResponseEntity<String> signup(@Valid @ModelAttribute SignupRequestDto signupRequestDto,
             BindingResult bindingResult) {
 
         // バリデーションエラーのチェック
         if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult.getAllErrors().toString();
-            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+            String errorMessage = bindingResult.getAllErrors().stream()
+                    .map(err -> err.getDefaultMessage())
+                    // エラーメッセージをカンマで連結
+                    .collect(Collectors.joining(", "));
+            return redirectToErrorPage(errorMessage);
         }
 
         try {
